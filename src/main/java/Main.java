@@ -14,7 +14,6 @@ public class Main {
         System.out.print("Самая быстрая машина: " + race.leader);
         scanner.close();
     }
-
     public static Car addCarbyNumber(int carNumber, Scanner scanner){
         Car car = new Car();
         String name = "";
@@ -35,63 +34,21 @@ public class Main {
             if (input.isEmpty()) {
                 System.out.println("Ошибка: значение скорости не введено!");
             } else {
-                //тут я поискала, как можно проверить, есть ли в строке символы кроме цифр.
-                //Пробовала Scanner.hasNextInt() использовать, но все время какая-то ерунда получалась
-                //на пустой ввод плохо реагировал.
-                if (!input.matches("-?\\d+")) {
-                    System.out.println("Ошибка! Введите целое число!");
-                }
-                else {
+                try {
                     speed = Integer.parseInt(input); //как парсить тоже спросила в Яндексе
                     if (speed > 0 && speed <= 250) {
                         car.speed = speed;
                         break;
-                    }
-                    else {
+                    } else {
                         System.out.println("Ошибка! Значение скорости должно быть больше 0 и меньше 250.");
                     }
                 }
+                catch(NumberFormatException e) {
+                    System.out.println("Ошибка! Введите целое число от 1 до 250!");
+                }
             }
-
-
         }
-
         return car;
-    }
-    public static class Car {
-        String name; //название автомобиля
-        int speed;
-        //конструктор
-        public Car() {
-            this.name = "";
-            this.speed = 0;
-        }
-         public Car (String name, int speed){
-            this.name = name;
-            this.speed = speed;
-        }
-
-
-    }
-    public static class Race {
-        String leader = "";
-        int distance = 0;
-        public Race() {
-            this.leader = "";
-            this.distance = 0;
-        }
-        public Race(String name, int distance) {
-            this.leader = name;
-            this.distance = distance;
-        }
-
-        void identifyLeader(String newName, int newSpeed) {
-            int newDistance = newSpeed * 24;
-            if (newDistance > distance) {
-                leader = newName;
-                distance = newDistance;
-            }
-        }
     }
 }
 
